@@ -120,16 +120,6 @@ public class Maze extends JFrame {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     private boolean startBfs(int[] start) {
         boolean result = false;
         Queue<int[]> queue = new LinkedList();
@@ -137,10 +127,9 @@ public class Maze extends JFrame {
         queue.add(start);
         while (!queue.isEmpty()) {
             int[] currentNode = queue.remove();
-
-            if (!isVisited(currentNode))
+            if (!isVisited(currentNode)) {
                 setSquareAsVisited(currentNode[X], currentNode[Y], true);
-
+            }
             if (currentNode[X] == values.length - 1 && currentNode[Y] == values[0].length - 1) {
                 result = true;
                 break;
