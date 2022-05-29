@@ -10,7 +10,7 @@ public class Definitions {
     public static final int ALGORITHM_DFS = 2;
     public static final int ALGORITHM_BFS = 3;
 
-    private static final int X = 0;
-    //private static final int Y = 1;
+    public static final int X = 0;
+    public static final int Y = 1;
 
 }

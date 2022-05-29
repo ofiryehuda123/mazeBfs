@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public class Maze extends JFrame {
     private int columns;
     private boolean backtracking;
     private int algorithm;
+    private final int X = Definitions.X; // so we wouldn't need to rewrite "Definitions.X" every time
+    private final int Y = Definitions.Y; // so we wouldn't need to rewrite "Definitions.Y" every time
 
 
     public Maze(int algorithm, int size, int startRow, int startColumn) {
@@ -116,45 +119,59 @@ public class Maze extends JFrame {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
     private boolean startBfs(int[] start) {
         boolean result = false;
         Queue<int[]> queue = new LinkedList();
-        setSquareAsVisited(start[0], start[1],true);
+        setSquareAsVisited(start[X], start[Y],true);
         queue.add(start);
         while (!queue.isEmpty()) {
             int[] currentNode = queue.remove();
-            setSquareAsVisited(currentNode[0], currentNode[1], true);
-            if(currentNode[0] == values.length - 1 && currentNode[1] == values[0].length - 1) {
+
+            if (!isVisited(currentNode))
+                setSquareAsVisited(currentNode[X], currentNode[Y], true);
+
+            if (currentNode[X] == values.length - 1 && currentNode[Y] == values[0].length - 1) {
                 result = true;
                 break;
             }
             for (int[] currentNeighbor : getNeighborsBfs(currentNode)) {
                 if (!isVisited(currentNeighbor)) {
-                    setSquareAsVisited(currentNeighbor[0], currentNeighbor[1], true);
+                    setSquareAsVisited(currentNeighbor[X], currentNeighbor[Y], true);
                     queue.add(currentNeighbor);
-
                 }
             }
         }
+
         return result;
     }
 
 
     private boolean isVisited(int[] node){
-        return this.visited[node[0]][node[1]];
+        return this.visited[node[X]][node[Y]];
     }
 
 
     private ArrayList<int[]> getNeighborsBfs(int[] currentNode){
         ArrayList<int[]> neighbors = new ArrayList<>();
-        for(int i = currentNode[0] - 1; i <= currentNode[0]+ 1; i++){
-            for(int j = currentNode[1] -1; j <= currentNode[1] + 1; j++){
+        for(int i = currentNode[X] - 1; i <= currentNode[X]+ 1; i++){
+            for(int j = currentNode[Y] -1; j <= currentNode[Y] + 1; j++){
                 if(
-                        (currentNode[0] != i || currentNode[1] != j)
+                        (currentNode[X] != i || currentNode[Y] != j)
                                 &&
                                 ( i >= 0 && j >= 0 )
                                 &&
-                                (i < values[1].length)
+                                (i < values[0].length)
                                 &&
                                 (j < values[0].length )
                 ){
@@ -166,4 +183,5 @@ public class Maze extends JFrame {
         }
         return neighbors;
     }
+
 }
